@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Dictionary from './Dictionary.js';
 
 function App() {
   return (
@@ -9,14 +10,15 @@ function App() {
         <p>
           Hello </p>
       </header>
-      <footer>Coded by
+      <main>
+        <Dictionary />
+      </main>
+      <footer className="text-center">Coded by
       <a href="https://github.com/kromer52" target="_blank"> Ilona</a>,
       code hosted on
-      <a href="https://github.com/kromer52/react-add-on" target="_blank">GitHub</a>
+      <a href="https://github.com/kromer52/react-add-on" target="_blank"> GitHub </a>
       and website hosted on
-      <a href="https://react-add-on.vercel.app/" target="_blank"
-        >Vercel</a
-      ></footer>
+      <a href="https://react-add-on.vercel.app/" target="_blank"> Vercel </a></footer>
     </div>
     </div>
   );
