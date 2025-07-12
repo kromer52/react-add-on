@@ -1,40 +1,71 @@
-import { useState } from 'react';
-import './Dictionary.css';
-import axios from 'axios';
-import Results from './Results';
+import React, { useState } from "react";
+import axios from "axios";
+import Results from "./Results";
+import Photos from "./Photos";
+import "./Dictionary.css";
 
-export default function Dictionary() {
-  const [keyword, setKeyword] = useState("");
+export default function Dictionary(props) {
+  let [keyword, setKeyword] = useState(props.defaultKeyword);
+  let [results, setResults] = useState(null);
+  let [loaded, setLoaded] = useState(false);
+  let [photos, setPhotos] = useState(null);
 
-  function handleResponse(response) {
-    console.log(response.data[0]);
-    console.log(response.data[0].meanings[0].definitions[0].definition);
+  function handleDictionResponse(response) {
+    setResults(response.data[0]);
   }
 
-  function search(event) {
+  function handlePexelsResponse(response) {
+    setPhotos(response.data.photos);
+  }
+
+  function search() {
+    let apiKey = "303634af30at1e0bobd77c2b1f682f81";
+    let apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${apiKey}`;
+    axios.get(apiUrl).then(handleDictionResponse);
+
+    let pexelsApiKey =
+      "563492ad6f91700001000001fdd29f0808df42bd90c33f42e128fa89";
+    let pexelsApiUrl = `https://api.pexels.com/v1/search?query=${keyword}&per_page=9`;
+    let headers = { Authorization: `${pexelsApiKey}` };
+    axios.get(pexelsApiUrl, { headers: headers }).then(handlePexelsResponse);
+  }
+
+  function handleSubmit(event) {
     event.preventDefault();
-
-    const apiKey = "303634af30at1e0bobd77c2b1f682f81";
-    const apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${apiKey}`;
-
-    axios.get(apiUrl).then(handleResponse);
+    search();
   }
 
   function handleKeywordChange(event) {
     setKeyword(event.target.value);
   }
 
-  return (
-    <div className="Dictionary">
-      <form onSubmit={search}>
-        <input
-          type="search"
-          autoFocus={true}
-          onChange={handleKeywordChange}
-          value={keyword}
-        />
-      </form>
-      <Results /> 
-    </div>
-  );
+  function load() {
+    setLoaded(true);
+    search();
+  }
+
+  if (loaded) {
+    return (
+      <div className="Dictionary">
+        <section>
+          <h1>What word do you want to look up?</h1>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="search"
+              onChange={handleKeywordChange}
+              defaultValue={props.defaultKeyword}
+            />
+          </form>
+          <div className="hint">
+            suggested words: sunset, wine, yoga, plant...
+          </div>
+        </section>
+        <Results results={results} />
+        <Photos photos={photos} />
+      </div>
+    );
+  } else {
+    load();
+    return "Loading";
+  }
 }
