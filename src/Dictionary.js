@@ -19,8 +19,8 @@ export default function Dictionary(props) {
   }
 
   function search() {
-    let apiKey = "303634af30at1e0bobd77c2b1f682f81";
-    let apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${apiKey}`;
+    // documentation: https://dictionaryapi.dev/e
+    let apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en_US/${keyword}`;
     axios.get(apiUrl).then(handleDictionResponse);
 
     let pexelsApiKey =
