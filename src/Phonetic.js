@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Phonetic(props) {
-  return <div className="Phonetic">[Phonetic content goes here]</div>;
+  return <div className="Phonetic"></div>;
 }
