@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Photos(props) {
-  return <div className="Photos">[Photos will appear here later]</div>;
+export default function Phonetic(props) {
+  return <div className="Phonetic">[Phonetic content goes here]</div>;
 }
