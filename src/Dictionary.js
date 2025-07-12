@@ -1,15 +1,69 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Results from "./Results";
+// import Photos from "./Photos";    // ← temporarily disabled
+import "./Dictionary.css";
 
-export default function Dictionary(props) {
-  console.log("► Dictionary mount – props.defaultKeyword:", props.defaultKeyword);
+export default function Dictionary({ defaultKeyword }) {
+  const [keyword, setKeyword] = useState(defaultKeyword);
+  const [results, setResults]   = useState(null);
+  const [error, setError]       = useState(null);
 
   useEffect(() => {
-    console.log("► Dictionary useEffect fired – you can stub search here");
+    search();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function handleDictionaryResponse(response) {
+    setResults(response.data[0]);
+  }
+
+  function handleDictionaryError(err) {
+    console.error("Dictionary API error", err);
+    setError("Could not fetch definitions.");
+  }
+
+  function search() {
+    setError(null);
+    axios
+      .get(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${keyword}`)
+      .then(handleDictionaryResponse)
+      .catch(handleDictionaryError);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!keyword.trim()) return;
+    search();
+  }
+
+  function handleKeywordChange(e) {
+    setKeyword(e.target.value);
+  }
 
   return (
     <div className="Dictionary">
-      <h1>✅ Dictionary is rendering!</h1>
+      <section>
+        <h1>What word do you want to look up?</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="search"
+            value={keyword}
+            onChange={handleKeywordChange}
+          />
+        </form>
+        <div className="hint">
+          suggested words: sunset, wine, yoga, plant…
+        </div>
+      </section>
+
+      {error && <p className="error">{error}</p>}
+
+      {/* Show dictionary results once we have them */}
+      {results && <Results results={results} />}
+
+      {/* Photos component temporarily disabled */}
+      {/* <Photos photos={photos} /> */}
     </div>
   );
 }
