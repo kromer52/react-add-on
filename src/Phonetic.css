@@ -1,23 +1,25 @@
+/* Phonetic.css */
 .Phonetic {
-  margin: 20px 0 0;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
 }
 
 .Phonetic h2 {
+  margin: 0 0 0 0.5rem; /* space after button */
   font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
-  color: #666666;
-  display: inline;
+  font-size: 1rem;
+  color: #666;
 }
 
-.Phonetic a {
+.play-button {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
   color: #6c63ff;
-  font-weight: normal;
-  margin-right: 15px;
-  font-size: 14px;
-  line-height: 17px;
-  padding: 8px 18px;
-  border: 1px solid #dddddd;
-  border-radius: 50px;
-  text-decoration: none;
+  padding: 0;
+}
+.play-button:hover {
+  color: #4a46e5;
 }
