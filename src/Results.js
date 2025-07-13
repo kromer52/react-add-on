@@ -1,28 +1,43 @@
+// Results.js
 import React from "react";
-import Meaning from "./Meaning";
 import Phonetic from "./Phonetic";
+import Synonyms from "./Synonyms";
 import "./Results.css";
 
-export default function Results(props) {
+export default function Results({ definition }) {
+  if (!definition) return null;
 
-  if (props.definition) {
-    return (
-      <div className="Result">
-        <section>
-          <h1>{props.definition.word}</h1>
-          <Phonetic phonetic={props.definition.phonetic} />
+  // 1) flatten all definitions across meanings
+  const allDefs = [];
+  definition.meanings.forEach((meaning) => {
+    meaning.definitions.forEach((d) => {
+      allDefs.push({
+        partOfSpeech: meaning.partOfSpeech,
+        definition: d.definition,
+        example: d.example,
+        synonyms: d.synonyms,
+      });
+    });
+  });
+
+  // 2) take only the first two
+  const firstTwo = allDefs.slice(0, 2);
+
+  return (
+    <div className="Result">
+      <section>
+        <h1>{definition.word}</h1>
+        <Phonetic phonetic={definition.phonetic} />
+      </section>
+
+      {firstTwo.map((item, idx) => (
+        <section key={idx}>
+          <h3>{item.partOfSpeech}</h3>
+          <div className="definition">{item.definition}</div>
+          {item.example && <div className="example">{item.example}</div>}
+          <Synonyms synonyms={item.synonyms} />
         </section>
-
-        {props.definition.meanings.map(function (meaning, index) {
-          return (
-            <section key={index}>
-              <Meaning meaning={meaning} />
-            </section>
-          );
-        })}
-      </div>
-    );
-  } else {
-    return null;
-  }
+      ))}
+    </div>
+  );
 }

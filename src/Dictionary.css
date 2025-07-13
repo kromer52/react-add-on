@@ -29,12 +29,10 @@
   padding: 22px;
   border: 1px solid #dddddd;
   border-radius: 6px;
-
   width: 100%;
 }
 
-
 .Dictionary .hint {
-	margin-top: 15px;
-	display: block;
+  margin-top: 15px;
+  display: block;
 }
