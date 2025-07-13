@@ -45,13 +45,17 @@ export default function Dictionary({ defaultKeyword }) {
     <div className="Dictionary">
       <section>
         <h1>What word do you want to look up?</h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="search"
-            value={keyword}
-            onChange={handleKeywordChange}
-          />
-        </form>
+       <form onSubmit={handleSubmit}>
+  <input
+    type="search"
+    className="search-input"
+    value={keyword}
+    onChange={handleKeywordChange}
+    placeholder="e.g. sunset, yoga, coding"
+    autoFocus
+  />
+</form>
+
         <div className="hint">
           suggested words: sunset, wine, yoga, plant…
         </div>
@@ -59,7 +63,6 @@ export default function Dictionary({ defaultKeyword }) {
 
       {error && <p className="error">{error}</p>}
 
-      {/* Show dictionary results once we have them */}
      {results && <Results definition={results} />}
 
 
