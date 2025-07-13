@@ -1,7 +1,12 @@
 import React from "react";
 import Dictionary from "./Dictionary";
+import Footer from "./Footer";
 
 export default function App() {
-  console.log("► App rendering");
-  return <Dictionary defaultKeyword="sunset" />;
+  return (
+    <div className="App">
+      <Dictionary defaultKeyword="sunset" />
+      <Footer />
+    </div>
+  );
 }
