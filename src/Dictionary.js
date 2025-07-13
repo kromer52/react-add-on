@@ -60,7 +60,8 @@ export default function Dictionary({ defaultKeyword }) {
       {error && <p className="error">{error}</p>}
 
       {/* Show dictionary results once we have them */}
-      {results && <Results results={results} />}
+     {results && <Results definition={results} />}
+
 
       {/* Photos component temporarily disabled */}
       {/* <Photos photos={photos} /> */}
